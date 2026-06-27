@@ -17,19 +17,15 @@ events = [
     Event(2, "Python Workshop")
 ]
 
-# GET all events
+# Welcome route
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"message": "Welcome to the Event Management API"}), 200
+
+# Get all events
 @app.route("/events", methods=["GET"])
 def get_events():
     return jsonify([event.to_dict() for event in events]), 200
-
-# GET one event
-@app.route("/events/<int:event_id>", methods=["GET"])
-def get_event(event_id):
-    for event in events:
-        if event.id == event_id:
-            return jsonify(event.to_dict()), 200
-
-    return jsonify({"error": "Event not found"}), 404
 
 # Create a new event
 @app.route("/events", methods=["POST"])
@@ -45,7 +41,7 @@ def create_event():
 
     return jsonify(new_event.to_dict()), 201
 
-# Update an event
+# Update an existing event
 @app.route("/events/<int:event_id>", methods=["PATCH"])
 def update_event(event_id):
     data = request.get_json()
