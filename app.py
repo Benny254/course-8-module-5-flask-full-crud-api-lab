@@ -57,14 +57,14 @@ def update_event(event_id):
     return jsonify({"error": "Event not found"}), 404
 
 # Delete an event
+# Delete an event
 @app.route("/events/<int:event_id>", methods=["DELETE"])
 def delete_event(event_id):
     for event in events:
         if event.id == event_id:
             events.remove(event)
-            return jsonify({"message": "Event deleted successfully"}), 200
+            return "", 204
 
     return jsonify({"error": "Event not found"}), 404
-
 if __name__ == "__main__":
     app.run(debug=True)
